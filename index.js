@@ -31,25 +31,25 @@ async function run() {
 // Exécutez la fonction run pour démarrer la connexion
 run().catch(console.dir);
 
-async function testMongoDB() {
-  try {
-    const database = client.db(DATABASE_NAME);
-    const collection = database.collection('produit');
+// async function testMongoDB() {
+//   try {
+//     const database = client.db(DATABASE_NAME);
+//     const collection = database.collection('produit');
 
-    // Récupérer tous les documents dans la collection
-    const documents = await collection.find({}).toArray();
-    console.log('Documents récupérés avec succès :', documents);
+//     // Récupérer tous les documents dans la collection
+//     const documents = await collection.find({}).toArray();
+//     console.log('Documents récupérés avec succès :', documents);
 
-    // Insérer un nouveau document dans la collection
-    const result = await collection.insertOne({ name: 'Jokkn', age: 90 });
-    console.log('Nouveau document inséré avec succès :', result.insertedId);
-  } catch (error) {
-    console.error('Erreur lors du test de MongoDB :', error);
-  } finally {
-    // Assurez-vous de fermer la connexion une fois que vous avez terminé
-    await client.close();
-  }
-}
+//     // Insérer un nouveau document dans la collection
+//     const result = await collection.insertOne({ name: 'Jokkn', age: 90 });
+//     console.log('Nouveau document inséré avec succès :', result.insertedId);
+//   } catch (error) {
+//     console.error('Erreur lors du test de MongoDB :', error);
+//   } finally {
+//     // Assurez-vous de fermer la connexion une fois que vous avez terminé
+//     await client.close();
+//   }
+// }
 
 // Exécutez la fonction de test
-testMongoDB().catch(console.dir);
+// testMongoDB().catch(console.dir);
