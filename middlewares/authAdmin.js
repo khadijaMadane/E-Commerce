@@ -14,4 +14,4 @@ const authAdmin = async (req,res, next)=>{
         return res.status(500).json({msg: err.message}) 
     }
 }
-modele.exports = authAdmin
+module.exports = authAdmin
