@@ -11,7 +11,6 @@ const createProduct = asyncHandler(async (req, res) => {
   });
   const getaProduct = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    validateMongoDbId(id);
     try {
       const findProduct = await Product.findById(id);
       res.json(findProduct);
@@ -20,4 +19,4 @@ const createProduct = asyncHandler(async (req, res) => {
     }
   });
   module.exports = {
-    createProduct,}  
+    createProduct, getaProduct, }  
