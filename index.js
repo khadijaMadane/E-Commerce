@@ -13,7 +13,7 @@ const categoryRouter = require("./routers/prodcategoryRoute");
 const blogCatRouter = require("./routers/blogCatRoute");
 const brandRouter = require("./routers/brandRoute");
 const couponRouter = require("./routers/couponRoute");
-// const uploadRouter = require("./routers/uploadRoute");
+
 
 const morgan = require("morgan");
 dbConnect();
@@ -30,7 +30,6 @@ app.use("/api/category", categoryRouter);
 app.use("/api/blogcategory", blogCatRouter);
 app.use("/api/brand", brandRouter);
 app.use("/api/coupon", couponRouter);
-// app.use("/api/upload", uploadRouter);
 
 app.use(notFound);
 app.use(errorHandler);
