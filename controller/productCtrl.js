@@ -200,9 +200,9 @@ const createProduct = asyncHandler(async (req, res) => {
   });
   
   const uploadImages = asyncHandler(async (req, res) => {
-    const { id } = req.params;
-    validateMongoDbId(id);
-    console.log(req.file);
+    // const { id } = req.params;
+    // validateMongoDbId(id);
+    // console.log(req.file);
     try {
       const uploader = (path) => cloudinaryUploadImg(path, "images");
       const urls = [];
@@ -214,27 +214,27 @@ const createProduct = asyncHandler(async (req, res) => {
         urls.push(newpath);
         fs.unlinkSync(path);
       }
-      const findProduct = await Product.findByIdAndUpdate(
-        id, 
-        {
-         images : urls.map((file) => {
-          return file;
-         }),
-      },
-      {
-        new:true,
-      });
-      // const images = urls.map((file) => {
-      //   return file;
+      // const findProduct = await Product.findByIdAndUpdate(
+      //   id, 
+      //   {
+      //    images : urls.map((file) => {
+      //     return file;
+      //    }),
+      // },
+      // {
+      //   new:true,
       // });
-      res.json(findProduct);
+      const images = urls.map((file) => {
+        return file;
+      });
+      res.json(images);
     } catch (error) {
       throw new Error(error);
     }
   });
   const deleteImages = asyncHandler(async (req, res) => {
     const { id } = req.params;
-    validateMongoDbId(id);
+    // validateMongoDbId(id);
     try {
       const deleted = cloudinaryDeleteImg(id, "images");
       res.json({ message: "Deleted" });
