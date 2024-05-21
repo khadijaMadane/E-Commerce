@@ -8,11 +8,11 @@ import * as yup from 'yup';
 import { registerUser } from '../features/user/userSlice';
 
 const signUpSchema = yup.object({
-  firstname: yup.string().required('First Name is Required'),
-  lastname: yup.string().required('Last Name is Required'),
-  email: yup.string().nullable().email('Email Should be valid'),
-  mobile: yup.string().required('Mobile No is Required'),
-  password: yup.string().required('Password is Required'),
+  firstname: yup.string().required('First Name is Required').required("First name adress is required"),
+  lastname: yup.string().required('Last Name is Required').required("last name adress is required"),
+  email: yup.string().nullable().email('Email Should be valid').required("email adress is required"),
+  mobile: yup.string().required('Mobile No is Required').required("mobile number adress is required"),
+  password: yup.string().required('Password is Required').required("password adress is required"),
 });
 
 const Signup = () => {
