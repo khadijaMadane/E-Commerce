@@ -6,6 +6,14 @@ import Color from '../components/Color';
 import Container from '../components/Container'
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from '../features/products/productSlice';
+
+
+// import watchImage from 'khadija/khadija/watch.jpg';
+// import grImage from 'khadija/khadija/gr.svg';
+// import gr2Image from 'khadija/khadija/gr2.svg';
+// import gr3Image from 'khadija/khadija/gr3.svg';
+// import { watch } from '../../../../front_end/models/prodcategoryModel';
+
 const OurStore = () => {
   const [grid,setGrid]=useState(4);
   const productState=useSelector((state)=>state.product.product);
@@ -18,6 +26,7 @@ const OurStore = () => {
   const getProducts=()=>{
     dispatch(getAllProducts());
   };
+
 
 
   return (
@@ -138,7 +147,7 @@ const OurStore = () => {
                   <div className="randon-products d-flex">
                     <div className="w-50">
                         <img
-                        src="images/images/watch.jpg"
+                        src="khadija/khadija/watch.jpg"
                         className="img-fluid"
                         alt="watch"
                         />
@@ -153,7 +162,7 @@ const OurStore = () => {
                     <div className="randon-products d-flex">
                     <div className="w-50">
                         <img
-                        src="images/images/watch.jpg"
+                        src="khadija/khadija/watch.jpg"
                         className="img-fluid"
                         alt="watch"
                         />
@@ -191,10 +200,10 @@ const OurStore = () => {
                     <div className="d-flex align-items-center gap-10"> 
                       <p className="totalproducts">21 Products</p>
                       <div className="d-flex gap-10 align-items-center grid">
-                      <img onClick={()=>{setGrid(3);}} src="images/images/gr.svg" className="d-block img-fluid" alt="grid" />
-                      <img onClick={()=>{setGrid(4);}} src="images/images/gr2.svg" className="d-block img-fluid" alt="grid"/>
-                      <img onClick={()=>{setGrid(6);}} src="images/images/gr3.svg" className="d-block img-fluid" alt="grid" />
-                      <img onClick={()=>{setGrid(12);}} src="images/images/gr.svg" className="d-block img-fluid" alt="grid" />
+                      <img onClick={()=>{setGrid(3);}} src="khadija/khadija/gr.svg" className="d-block img-fluid" alt="grid" />
+                      <img onClick={()=>{setGrid(4);}} src="khadija/khadija/gr.svg" className="d-block img-fluid" alt="grid"/>
+                      <img onClick={()=>{setGrid(6);}} src="khadija/khadija/gr.svg" className="d-block img-fluid" alt="grid" />
+                      <img onClick={()=>{setGrid(12);}} src="khadija/khadija/gr.svg" className="d-block img-fluid" alt="grid" />
                       </div>
                     </div>
                   </div>
@@ -216,4 +225,4 @@ const OurStore = () => {
 </>
   )
 }
-export default OurStore
+export default OurStore;

@@ -15,7 +15,7 @@ const Home = () => {
                 <div className="col-6">
                     <div className="main-banner position-relative p-3">
                          <img
-                            src="images/images/main-banner-1.jpg"
+                            src="khadija/khadija/main-banner-1.jpg"
                             className="img-fluid rounded-3"
                             alt="main banner"/>
         <div className="main-banner-content position-absolute">
@@ -30,7 +30,7 @@ const Home = () => {
 <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">
 <div className="small-banner position-relative p-3">
 <img
-src="images/images/catbanner-01.jpg"
+src="basma/catbanner-01.jpg"
 className="img-fluid rounded-3"
 alt="main banner"
 />
@@ -43,7 +43,7 @@ alt="main banner"
 </div>
 <div className="small-banner position-relative p-3">
 <img
-src="images/images/catbanner-02.jpg"
+src="khadija/khadija/catbanner-02.jpg"
 className="img-fluid rounded-3"
 alt="main banner"
 />
@@ -56,7 +56,7 @@ alt="main banner"
 </div>
 <div className="small-banner position-relative p-3">
 <img
-src="images/images/catbanner-03.jpg"
+src="khadija/khadija/catbanner-03.jpg"
 className="img-fluid rounded-3"
 alt="main banner"
 />
@@ -69,7 +69,7 @@ alt="main banner"
 </div>
 <div className="small-banner position-relative p-3">
 <img
-src="images/images/catbanner-04.jpg"
+src="khadija/khadija/catbanner-04.jpg"
 className="img-fluid rounded-3"
 alt="main banner"
 />
@@ -94,7 +94,7 @@ alt="main banner"
                         return(
                           <div className='d-flex align-items-center gap-15 'key={j}>
 
-                        <img src={i.images} alt="services" />
+                        <img src={i.khadija} alt="services" />
                         <div>
                         <h6>{i.title}</h6>
                             <p className='mb-0'>{i.tagline}</p>
@@ -116,56 +116,56 @@ alt="main banner"
                         <h6>Cameras</h6>
                         <p>10 Items</p>
                         </div>
-                        <img src="images/images/camera.jpg" alt="camera"/>
+                        <img src="khadija/khadija/camera.jpg" alt="camera"/>
                     </div>
                     <div className="d-flex gap-10 align-items-center">
                         <div>
                         <h6>Cameras</h6>
                         <p>10 Items</p>
                         </div>
-                        <img src="images/images/tv.jpg" alt="camera"/>
+                        <img src="khadija/khadija/tv.jpg" alt="camera"/>
                     </div>
                     <div className="d-flex gap-10 align-items-center">
                         <div>
                         <h6>Cameras</h6>
                         <p>10 Items</p>
                         </div>
-                        <img src="images/images/tv.jpg" alt="camera"/>
+                        <img src="khadija/khadija/tv.jpg" alt="camera"/>
                     </div>
                     <div className="d-flex gap-10 align-items-center">
                         <div>
                         <h6>Cameras</h6>
                         <p>10 Items</p>
                         </div>
-                        <img src="images/images/headphone.jpg" alt="camera"/>
+                        <img src="khadija/khadija/headphone.jpg" alt="camera"/>
                     </div>
                     <div className="d-flex gap-10 align-items-center">
                         <div>
                         <h6>Cameras</h6>
                         <p>10 Items</p>
                         </div>
-                        <img src="images/images/camera.jpg" alt="camera"/>
+                        <img src="khadija/khadija/camera.jpg" alt="camera"/>
                     </div>
                     <div className="d-flex gap-10 align-items-center">
                         <div>
                         <h6>Cameras</h6>
                         <p>10 Items</p>
                         </div>
-                        <img src="images/images/tv.jpg" alt="camera"/>
+                        <img src="khadija/khadija/tv.jpg" alt="camera"/>
                     </div>
                     <div className="d-flex gap-10 align-items-center">
                         <div>
                         <h6>Cameras</h6>
                         <p>10 Items</p>
                         </div>
-                        <img src="images/images/tv.jpg" alt="camera"/>
+                        <img src="khadija/khadija/tv.jpg" alt="camera"/>
                     </div>
                     <div className="d-flex gap-10 align-items-center">
                         <div>
                         <h6>Cameras</h6>
                         <p>10 Items</p>
                         </div>
-                        <img src="images/images/headphone.jpg" alt="camera"/>
+                        <img src="khadija/khadija/headphone.jpg" alt="camera"/>
                     </div>
                 </div>
             </div>
@@ -197,28 +197,28 @@ alt="main banner"
               <div className="marquee-inner-wrapper card-wrapper">
                 <Marquee className="d-flex">
                   <div className="mx-4 w-25">
-                    <img src="images/brand-01.png" alt="brand" />
+                    <img src="khadija/brand-01.png" alt="brand" />
                   </div>
                   <div className="mx-4 w-25">
-                    <img src="images/images/brand-02.png" alt="brand" />
+                    <img src="khadija/khadija/brand-02.png" alt="brand" />
                   </div>
                   <div className="mx-4 w-25">
-                    <img src="images/images/brand-03.png" alt="brand" />
+                    <img src="khadija/khadija/brand-03.png" alt="brand" />
                   </div>
                   <div className="mx-4 w-25">
-                    <img src="images/images/brand-04.png" alt="brand" />
+                    <img src="khadija/khadija/brand-04.png" alt="brand" />
                   </div>
                   <div className="mx-4 w-25">
-                    <img src="images/images/brand-05.png" alt="brand" />
+                    <img src="khadija/khadija/brand-05.png" alt="brand" />
                   </div>
                   <div className="mx-4 w-25">
-                    <img src="images/images/brand-06.png" alt="brand" />
+                    <img src="khadija/khadija/brand-06.png" alt="brand" />
                   </div>
                   <div className="mx-4 w-25">
-                    <img src="images/images/brand-07.png" alt="brand" />
+                    <img src="khadija/khadija/brand-07.png" alt="brand" />
                   </div>
                   <div className="mx-4 w-25">
-                    <img src="images/images/brand-08.png" alt="brand" />
+                    <img src="khadija/khadija/brand-08.png" alt="brand" />
                   </div>
                 </Marquee>
               </div>

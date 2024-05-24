@@ -19,7 +19,7 @@ const enqRouter = require("./routers/enqRoute");
 
 const morgan = require("morgan");
 dbConnect();
-
+app.use(express.static('public'));
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -41,3 +41,5 @@ app.use(errorHandler);
 app.listen(PORT, () =>{
     console.log(`Server is running at PORT ${PORT}`);
 });
+
+
