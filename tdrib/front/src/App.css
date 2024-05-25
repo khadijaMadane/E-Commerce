@@ -144,14 +144,13 @@ color: var(--color-131921);
   text-transform: uppercase;
   }
   .small-banner-content h5 {
-  font-size: 22px;
+  font-size: 25px;
   line-height: 34px;
   letter-spacing:-2px;
   font-weight: 500;
   text-transform: none;}
   .small-banner-content p {
-  font-size: 14px;
-  line-height: 22px;
+  font-size: 10px;
   letter-spacing: 0.4;
   color: var(--color-131921);
   }
@@ -254,34 +253,44 @@ color: var(--color-777777);
 
 /*product card*/
 .product-card {
-  position: relative; /* Ajout d'une position relative pour positionner les images absolument */
+  position: relative;
   padding: 15px;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
 }
-.procuct-card .product-image {
-  height: 270;
+
+.product-card .product-image {
+  height: 270px; /* Ajoutez 'px' après la valeur */
 }
-.procuct-card .product-image img {
+
+.product-card .product-image img {
   object-fit: contain;
-}
-.product-card .product-image > img:last-child {
-  display: none;
-}
-.product-card:hover .product-image > img:nth-child(1) {
-  display: none;
-  
+  width: 100%; /* Assure que l'image prend toute la largeur du conteneur */
+  height: 100%; /* Assure que l'image prend toute la hauteur du conteneur */
+  transition: opacity 0.3s ease; /* Ajoute une transition pour l'opacité */
 }
 
-.product-card:hover .product-image >img:last-child {
-  display: block;}
-
-
-
-.product-card:hover .action-bar{
-right:15px
+.product-card .product-image img:last-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0; /* Assure que l'image est initialement cachée */
 }
+
+.product-card:hover .product-image img:first-child {
+  opacity: 0; /* Fait disparaître l'image principale au survol */
+}
+
+.product-card:hover .product-image img:last-child {
+  opacity: 1; /* Fait apparaître l'image au survol */
+}
+
+/* Ajustez la position de la barre d'action au survol */
+.product-card:hover .action-bar {
+  right: 15px;
+}
+
 .product-card .product-details h6{
   color: var(--color-bf4800);
   font-size: 13px;
@@ -701,3 +710,52 @@ color: var(--color-1c1c1b);
     font-size: 0.8em; /* Taille de police plus petite pour les messages d'erreur */
     margin-top: 5px; /* Espace supplémentaire au-dessus des messages d'erreur */
   }
+  .brand-img {
+    width: 100px;
+    height: auto;
+  }
+  .small-paragraph {
+    font-size: 0.875rem; /* Taille de police plus petite */
+    line-height: 0.7;    /* Hauteur de ligne ajustée */
+  }
+
+
+
+  
+  
+
+
+
+
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Assure que les éléments sont espacés */
+    width: 100%; /* S'assure que le conteneur utilise toute la largeur */
+    padding: 10px; /* Ajoute un peu de padding si nécessaire */
+  }
+  
+  .totalproducts {
+    margin: 0;
+    font-size: 16px;
+    margin-left: auto; /* Aligne le texte à droite */
+
+  }
+  
+  .grid-icons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .grid-icon {
+    cursor: pointer;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .grid-icon:hover {
+    color: #007bff;
+  }
+  

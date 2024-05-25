@@ -1,16 +1,12 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
-// import wish from 'khadija/khadija/wish.svg';
-// import tv from 'khadija/khadija/tv.jpg';
-// import prodcompare from 'khadija/khadija/prodcompare.svg';
-// import view from 'khadija/khadija/view.svg';
-// import addCart from 'khadija/khadija/add-cart.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faExchangeAlt, faEye, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 const ProductCard = (props) => {
   const { grid, data } = props;
   let location = useLocation();
-  console.log(data);
   
   return (
     <>
@@ -31,12 +27,12 @@ const ProductCard = (props) => {
             >
               <div className="wishlist-icon position-absolute">
                 <button className="border-0 bg-transparent">
-                  <img src="khadija/khadija/tv.jpg" alt="wishlist" />
+                  <FontAwesomeIcon icon={faHeart} />
                 </button>
               </div>
               <div className="product-image">
-                <img src={item?.images[0].url} className="img-fluid" alt="product image" />
-                <img src="khadija/khadija/tv.jpg" className="img-fluid" alt="product image" />
+              <img src={item?.images[0].url} className="img-fluid mx_auto" alt="product image"  width={160}/>
+                <img src="khadija/khadija/tv.jpg" className="img-fluid mx_auto" alt="product image" width={160}/>                
               </div>
               <div className="product-details">
                 <h6 className="brand">{item?.brand}</h6>
@@ -51,13 +47,13 @@ const ProductCard = (props) => {
               <div className="action-bar position-absolute">
                 <div className="d-flex flex-column gap-15">
                   <button className="border-0 bg-transparent">
-                    <img src="khadija/khadija/prodcompare.svg" alt="compare" />
+                    <FontAwesomeIcon icon={faExchangeAlt} />
                   </button>
                   <button className="border-0 bg-transparent">
-                    <img src="khadija/khadija/view.svg" alt="view" />
+                    <FontAwesomeIcon icon={faEye} />
                   </button>
                   <button className="border-0 bg-transparent">
-                    <img src="khadija/khadija/add-cart.svg" alt="addcart" />
+                    <FontAwesomeIcon icon={faShoppingCart} />
                   </button>
                 </div>
               </div>

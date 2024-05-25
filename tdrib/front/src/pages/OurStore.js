@@ -6,13 +6,12 @@ import Color from '../components/Color';
 import Container from '../components/Container'
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from '../features/products/productSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { faThLarge, faTh, faThList, faBars } from '@fortawesome/free-solid-svg-icons';
 
 
-// import watchImage from 'khadija/khadija/watch.jpg';
-// import grImage from 'khadija/khadija/gr.svg';
-// import gr2Image from 'khadija/khadija/gr2.svg';
-// import gr3Image from 'khadija/khadija/gr3.svg';
-// import { watch } from '../../../../front_end/models/prodcategoryModel';
+
 
 const OurStore = () => {
   const [grid,setGrid]=useState(4);
@@ -147,7 +146,7 @@ const OurStore = () => {
                   <div className="randon-products d-flex">
                     <div className="w-50">
                         <img
-                        src="khadija/khadija/watch.jpg"
+                        src="https://sh0pcart.netlify.app/images/watch.jpg"
                         className="img-fluid"
                         alt="watch"
                         />
@@ -162,7 +161,7 @@ const OurStore = () => {
                     <div className="randon-products d-flex">
                     <div className="w-50">
                         <img
-                        src="khadija/khadija/watch.jpg"
+                        src="https://sh0pcart.netlify.app/images/watch.jpg"
                         className="img-fluid"
                         alt="watch"
                         />
@@ -197,15 +196,35 @@ const OurStore = () => {
                     <option value="created-descending">Date, new to old</option>
                     </select>
                     </div>
-                    <div className="d-flex align-items-center gap-10"> 
-                      <p className="totalproducts">21 Products</p>
-                      <div className="d-flex gap-10 align-items-center grid">
-                      <img onClick={()=>{setGrid(3);}} src="khadija/khadija/gr.svg" className="d-block img-fluid" alt="grid" />
-                      <img onClick={()=>{setGrid(4);}} src="khadija/khadija/gr.svg" className="d-block img-fluid" alt="grid"/>
-                      <img onClick={()=>{setGrid(6);}} src="khadija/khadija/gr.svg" className="d-block img-fluid" alt="grid" />
-                      <img onClick={()=>{setGrid(12);}} src="khadija/khadija/gr.svg" className="d-block img-fluid" alt="grid" />
-                      </div>
-                    </div>
+                    <div className="d-flex align-items-center justify-space-between gap-10 container">
+      <p className="totalproducts">21 Products</p>
+      <div className="d-flex gap-10 align-items-center grid-icons">
+        <FontAwesomeIcon
+          onClick={() => { setGrid(4); }}
+          icon={faTh}
+          className="grid-icon"
+          alt="grid 4"
+        />
+        <FontAwesomeIcon
+          onClick={() => { setGrid(3); }}
+          icon={faThLarge}
+          className="grid-icon"
+          alt="grid 3"
+        />
+        <FontAwesomeIcon
+          onClick={() => { setGrid(6); }}
+          icon={faThList}
+          className="grid-icon"
+          alt="grid 6"
+        />
+        <FontAwesomeIcon
+          onClick={() => { setGrid(12); }}
+          icon={faBars}
+          className="grid-icon"
+          alt="grid 12"
+        />
+      </div>
+    </div>
                   </div>
              
                 </div>

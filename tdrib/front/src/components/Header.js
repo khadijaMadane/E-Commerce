@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from 'react-icons/bs';
+import { FaExchangeAlt, FaHeart, FaUser, FaShoppingCart } from 'react-icons/fa'; // Importing Font Awesome icons
 
 const Header = () => {
   return (
@@ -48,43 +49,50 @@ const Header = () => {
               </div>
             </div>
             <div className="col-5">
-              <div className="header-upper-links d-flex align-items-center justify-content-between">
-                <div className="d-flex align-items-center gap-10">
-                  <Link  className="text-white" to="/compare-product">
-                    <div className="d-flex align-items-center">
-                      <img src="/images/images/compare.svg" alt="" />
-                      <p className="text-white mb-0">Compare <br />Products</p>
-                    </div>
-                  </Link>
+            <div className="header-upper-links d-flex align-items-center justify-content-between">
+            <div className="d-flex align-items-center gap-10">
+            <Link className="text-white" to="/compare-product">
+              <div className="d-flex align-items-center">
+                <FaExchangeAlt className="text-white" size={30} /> {/* Increase size to 30 */}
+                <div style={{ marginLeft: '5px' }}> {/* Add margin */}
+                  <p className="text-white mb-0">Compare <br />Products</p>
                 </div>
-                <div className="d-flex align-items-center gap-10">
-                  <Link className="text-white" to="/wishlist">
-                    <div className="d-flex align-items-center">
-                      <img src="/images/images/wishlist.svg" alt="" />
-                      <p className="text-white mb-0">Favourite <br />Wishlist</p>
-                    </div>
-                  </Link>
+              </div>
+            </Link>
+          </div>
+          <div className="d-flex align-items-center gap-10">
+            <Link className="text-white" to="/wishlist">
+              <div className="d-flex align-items-center">
+                <FaHeart className="text-white" size={30} /> {/* Increase size to 30 */}
+                <div style={{ marginLeft: '5px' }}> {/* Add margin */}
+                  <p className="text-white mb-0">Favourite <br />Wishlist</p>
                 </div>
-                <div className="d-flex align-items-center gap-10">
-                  <Link className="text-white" to="/login">
-                    <div className="d-flex align-items-center">
-                      <img src="/images/images/user.svg" alt="" />
-                      <p className="text-white mb-0">Log in <br />My Account</p>
-                    </div>
-                  </Link>
+              </div>
+            </Link>
+          </div>
+          <div className="d-flex align-items-center gap-10">
+            <Link className="text-white" to="/login">
+              <div className="d-flex align-items-center">
+                <FaUser className="text-white" size={30} /> {/* Increase size to 30 */}
+                <div style={{ marginLeft: '5px' }}> {/* Add margin */}
+                  <p className="text-white mb-0">Log in <br />My Account</p>
                 </div>
-                <div className="d-flex align-items-center gap-10">
-                  <Link className="text-white" to="/cart">
-                    <div className="d-flex align-items-center">
-                      <img src="/images/images/cart.svg" alt="" />
-                      <div className="d-flex flex-column gap-10">
-                        <span className="badge bg-white text-dark">0</span>
-                        <p className="text-white mb-0">$200</p>
-
-                      </div>
-                    </div>
-                  </Link>
+              </div>
+            </Link>
+          </div>
+          <div className="d-flex align-items-center gap-10">
+            <Link className="text-white" to="/cart">
+              <div className="d-flex align-items-center">
+                <FaShoppingCart className="text-white" size={30} /> {/* Increase size to 30 */}
+                <div style={{ marginLeft: '5px' }}> {/* Add margin */}
+                  <div className="d-flex flex-column gap-10">
+                    <span className="badge bg-white text-dark">0</span>
+                    <p className="text-white mb-0">$200</p>
+                  </div>
                 </div>
+              </div>
+            </Link>
+          </div>
               </div>
             </div>
           </div>
