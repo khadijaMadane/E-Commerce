@@ -16,8 +16,12 @@ export const loginUser=createAsyncThunk("auth/login", async (userData, thunkAPI)
         return thunkAPI.rejectWithValue(error)
     }
 })
+const getCustomerFromLocalStorage = () => {
+    const customer = localStorage.getItem("customer");
+    return customer ? JSON.parse(customer) : null;
+  };
 const initialState={
-    user:"",
+    user:getCustomerFromLocalStorage,
     isError:false,
     isSuccess:false,
     isLoading:false,
@@ -55,7 +59,7 @@ export const authSlice=createSlice({
             state.isError=false;
             state.isSuccess=true;
             state.user=action.payload;
-            if(state.isSuccess===true){
+            if(state.isSuccess){
                 localStorage.setItem("token",action.payload.token);
                 toast.info("user logged in Successfuly");
             }
@@ -63,9 +67,9 @@ export const authSlice=createSlice({
             state.isLoading=false;
             state.isError=true;
             state.isSuccess=false;
-            state.message=action.error;
+            state.message=action.error.message;
             if(state.isError===true){
-                toast.error(action.error);
+                toast.error(action.error.message);
             }
         })
     }

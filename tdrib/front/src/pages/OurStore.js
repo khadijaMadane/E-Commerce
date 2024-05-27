@@ -15,7 +15,7 @@ import { faThLarge, faTh, faThList, faBars } from '@fortawesome/free-solid-svg-i
 
 const OurStore = () => {
   const [grid,setGrid]=useState(4);
-  const productState=useSelector((state)=>state.product.product);
+  const productState=useSelector((state)=>state?.product?.product);
   console.log(productState);
   const dispatch=useDispatch();
 
@@ -231,7 +231,7 @@ const OurStore = () => {
                 <div>
                   <div className='products-lisr pd-5'>
                     <div className='d-flex gap-10 flex-wrap'>
-                    <ProductCard data={productState} grid={grid}/>
+                    <ProductCard data={productState ? productState : []} grid={grid}/>
                     </div>
                   </div>
 

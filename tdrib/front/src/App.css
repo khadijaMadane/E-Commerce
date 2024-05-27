@@ -316,10 +316,7 @@ color: var(--color-777777);
   right: -23px;
   transition: 0.3s;
 }
-.wishlist-icon{
-   top: 2%;
-   right: 15px;
-}
+
 /*special product*/
 .special-product-card{
   padding: 20px 10px;
@@ -403,6 +400,10 @@ border-color: var(--color-febd69);
     }
     .gr-3{
       width: 24%;
+    }
+    .product-image img {
+      width: 100%; /* Pour que l'image remplisse complètement le conteneur */
+      height: auto; /* Pour conserver le ratio hauteur/largeur */
     }
     .gr-12 .procuct-card{
       display: flex;
