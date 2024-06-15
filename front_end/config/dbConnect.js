@@ -12,7 +12,8 @@
 // module.exports = dbConnect;
 
 
-
+// db.js
+// db.js
 const mongoose = require("mongoose");
 
 const dbConnect = async () => {

@@ -4,10 +4,10 @@
     box-sizing: border-box;
 }
 :root{
-  --color-131921: #131921;
+  --color-131921: #2F4558;
   --color-3b4149: #3b4149;
   --color-febd69: #febd69;
-  --color-232f3e: #232f3e;
+  --color-232f3e: #335F8A;
   --color-bf4800: #bf4800;
   --color-f5f5f7: #f5f5f7;
   --color-ededed: #ededed;
@@ -15,6 +15,12 @@
   --color-1c1c1b: #1c1c1b;
 
 }
+.fixed-size {
+  width: 110px;
+  height: 110px;
+  object-fit: cover; /* This ensures the image covers the area without distortion */
+}
+
 .section-heading{
   font-size: 26px;
   line-height: 32px;
@@ -250,7 +256,12 @@ color: var(--color-777777);
   color: var(--color-777777);
   font-size: 14px;
 }
-
+.blog-image {
+  max-width: 50%; /* Adjust this value as needed */
+  height: auto;
+  margin: 0 auto; /* Center the image horizontally */
+  display: block;
+}
 /*product card*/
 .product-card {
   position: relative;
@@ -758,5 +769,79 @@ color: var(--color-1c1c1b);
   
   .grid-icon:hover {
     color: #007bff;
+  }
+  
+
+
+
+  .wishlist-card {
+    position: relative;
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .delete-button svg {
+    color: black; /* Customize the color of the "X" icon */
+    font-size: 20px; /* Adjust the size of the icon */
+  }
+  
+
+
+  /* BlogCard.css */
+
+  .blog-card {
+    width: 300px !important;
+    height: 400px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    background-color: #fff !important;
+  }
+  
+  .card-image img {
+    max-width: 100%; /* Set maximum width to 100% of the container */
+    max-height: 100%; /* Set maximum height to 100% of the container */
+    width: auto; /* Ensure width adjusts to maintain aspect ratio */
+    height: auto; /* Ensure height adjusts to maintain aspect ratio */
+  }
+  
+  
+  .blog-content .title {
+    font-size: 18px !important;
+    margin: 4px 0 !important;
+    font-weight: bold !important;
+  }
+  
+  .blog-content .desc {
+    font-size: 14px !important;
+    color: #555 !important;
+    flex-grow: 1 !important;
+  }
+  
+  .blog-content .button {
+    display: inline-block !important;
+    padding: 8px 10px !important;
+    background-color: #3b4149 !important;
+    color: #fff !important;
+    text-decoration: none !important;
+    border-radius: 4px !important;
+    margin-top: 10px !important;
+    text-align: center !important;
+    align-self: flex-start !important;
   }
   

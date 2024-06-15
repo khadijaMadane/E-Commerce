@@ -39,7 +39,9 @@ const ProductCard = (props) => {
                 <h6 className="brand">{item?.brand}</h6>
                 <h5 className="product-title">{item?.title}</h5>
                 <ReactStars count={5} size={24} value={item?.totalrating.toString()} edit={false} activeColor="#ffd700" />
-                <p className={`description ${grid === 12 ? "d-block" : "d-none"}`} dangerouslySetInnerHTML={{ __html: item?.description }}></p>
+                <p className={`description ${grid === 12 ? "d-block" : "d-none"}`}
+                 dangerouslySetInnerHTML={{ __html: item?.description }}
+                 ></p>
                 <p className="price">{item?.price}</p>
               </div>
               <div className="action-bar position-absolute">

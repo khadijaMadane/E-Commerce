@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 import {Link} from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/blogCard";
@@ -7,7 +7,22 @@ import SpecialProduct from '../components/SpecialProduct';
 import Container from '../components/Container'
 import { FaShippingFast, FaPercent, FaComments, FaDollarSign, FaLock, FaGift } from 'react-icons/fa'; // Importer les icônes Font Awesome
 import {services} from "../utils/Data"
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+import { getAllBlogs } from '../features/blogs/blogSlice';
+
 const Home = () => {
+
+  
+  const blogState=useSelector((state)=>state?.blog?.blog);
+  const dispatch=useDispatch();
+
+ useEffect(()=>{
+  getblogs();
+ }, [])
+  const getblogs=()=>{
+    dispatch(getAllBlogs());
+  };
   return (
     <>
     <Container class1="home-wrapper-1 py-5">
@@ -15,17 +30,12 @@ const Home = () => {
                 <div className="col-6">
                     <div className="main-banner position-relative p-3">
                     <img
-      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEbVQL6swwaiubQSJeUCELWrVKl3GmIYZ6YxfRRL4SA4eZCBJ0"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRuCP61ts1nwDkQHDGxEhYiG3fIIpHKnfOBA&s"
       style={{ width: '100%', height: 'auto' }}
       className="img-fluid rounded-3"
       alt="main banner"
     />
-        <div className="main-banner-content position-absolute">
-        <h4>SUPERCHARGED FOR PROS.</h4>
-        <h5>iPad S13+ Pro.</h5>
-        <p>From $1,299 or $61.82/mo </p>
-        <Link className="button">BUY NOW</Link>
-        </div>
+        
         </div>
         </div>
         <div className="col-6">
@@ -139,64 +149,67 @@ alt="main banner"
     <Container class1="home-wrapper-2 py-5">
     <div className="row">
             <div className="col-12">
-                <div className="categories d-flex justify-content-between flex-wrap align-items-center">
-                    <div className="d-flex gap-10 align-items-center">
-                        <div>
-                        <h6>Cameras</h6>
-                        <p>10 Items</p>
-                        </div>
-                        <img src="khadija/khadija/camera.jpg" alt="camera"/>
-                    </div>
-                    <div className="d-flex gap-10 align-items-center">
-                        <div>
-                        <h6>Cameras</h6>
-                        <p>10 Items</p>
-                        </div>
-                        <img src="khadija/khadija/tv.jpg" alt="camera"/>
-                    </div>
-                    <div className="d-flex gap-10 align-items-center">
-                        <div>
-                        <h6>Cameras</h6>
-                        <p>10 Items</p>
-                        </div>
-                        <img src="khadija/khadija/tv.jpg" alt="camera"/>
-                    </div>
-                    <div className="d-flex gap-10 align-items-center">
-                        <div>
-                        <h6>Cameras</h6>
-                        <p>10 Items</p>
-                        </div>
-                        <img src="khadija/khadija/headphone.jpg" alt="camera"/>
-                    </div>
-                    <div className="d-flex gap-10 align-items-center">
-                        <div>
-                        <h6>Cameras</h6>
-                        <p>10 Items</p>
-                        </div>
-                        <img src="khadija/khadija/camera.jpg" alt="camera"/>
-                    </div>
-                    <div className="d-flex gap-10 align-items-center">
-                        <div>
-                        <h6>Cameras</h6>
-                        <p>10 Items</p>
-                        </div>
-                        <img src="khadija/khadija/tv.jpg" alt="camera"/>
-                    </div>
-                    <div className="d-flex gap-10 align-items-center">
-                        <div>
-                        <h6>Cameras</h6>
-                        <p>10 Items</p>
-                        </div>
-                        <img src="khadija/khadija/tv.jpg" alt="camera"/>
-                    </div>
-                    <div className="d-flex gap-10 align-items-center">
-                        <div>
-                        <h6>Cameras</h6>
-                        <p>10 Items</p>
-                        </div>
-                        <img src="khadija/khadija/headphone.jpg" alt="camera"/>
-                    </div>
-                </div>
+            <div className="categories d-flex justify-content-between flex-wrap align-items-center">
+    <div className="d-flex gap-10 align-items-center">
+        <div>
+            <h6>Headphones
+            </h6>
+            <p>10 Items</p>
+        </div>
+        <img className="fixed-size" src="https://www.telstra.com.au/content/dam/tcom/devices/general/hardware/headphones/ghdwhph-sh3h/black/landscape-front.png" alt="camera"/>
+    </div>
+    <div className="d-flex gap-10 align-items-center">
+        <div>
+            <h6>TV</h6>
+            <p>10 Items</p>
+        </div>
+        <img className="fixed-size" src="https://www.sngf.ma/132-thickbox_default/tv-leader-led-43-smart-t2s2-109-cm.jpg" alt="camera"/>
+    </div>
+    <div className="d-flex gap-10 align-items-center">
+        <div>
+            <h6>Cameras</h6>
+            <p>10 Items</p>
+        </div>
+        <img className="fixed-size" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvV6D7XgWg4DGTOYfu7AaV_m1vi1qd6ligPw&s" alt="camera"/>
+    </div>
+    <div className="d-flex gap-10 align-items-center">
+        <div>
+            <h6>Smart Watches
+            </h6>
+            <p>10 Items</p>
+        </div>
+        <img className="fixed-size" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUcKhlsSGb8ZYzMUmjvLkBcEYqWrGtlPtAJA&s" alt="camera"/>
+    </div>
+    <div className="d-flex gap-10 align-items-center">
+        <div>
+            <h6>Laptops</h6>
+            <p>10 Items</p>
+        </div>
+        <img className="fixed-size" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1NZ-GcAgdXR6AxmOWPBSYS-cACiKkL3fHxg&s" alt="camera"/>
+    </div>
+    <div className="d-flex gap-10 align-items-center">
+        <div>
+            <h6>Speakers</h6>
+            <p>10 Items</p>
+        </div>
+        <img className="fixed-size" src="https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1657728279-jbl-parybox-1657728245.jpg?crop=1xw:1xh;center,top&resize=980:*" alt="camera"/>
+    </div>
+    <div className="d-flex gap-10 align-items-center">
+        <div>
+            <h6>Mobile Phone</h6>
+            <p>10 Items</p>
+        </div>
+        <img className="fixed-size" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs0i36nWx8--N4kVFiecBsZlPRgJRzdhimxQ&s" alt="camera"/>
+    </div>
+    <div className="d-flex gap-10 align-items-center">
+        <div>
+            <h6>Tablette</h6>
+            <p>10 Items</p>
+        </div>
+        <img className="fixed-size" src="https://p2-ofp.static.pub/fes/cms/2021/10/28/juqs65pgl1gh3dysi7yv1tnvtsiqva364946.png" alt="camera"/>
+    </div>
+</div>
+
             </div>
         </div>
     </Container>
@@ -282,18 +295,21 @@ alt="main banner"
 
 </div>
 <div className='row'>
-    <div className='col-3'>
-    <BlogCard/>
-    </div>
-    <div className='col-3'>
-    <BlogCard/>
-    </div>
-    <div className='col-3'>
-    <BlogCard/>
-    </div>
-    <div className='col-3'>
-    <BlogCard/>
-    </div>
+{blogState && blogState?.map((item, index)=>{
+                    if (index<4){
+                      return(
+                        <div className='col-3 ' key={index}> 
+                        <BlogCard id={item?._id} 
+                        title={item?.title} 
+                        description={item?.description} 
+                        image={item?.images[0]?.url}
+                        data={moment(item?.createdAt).format("MMMM Do YYYY, h:mm a")}
+                        />
+                        </div>
+     
+                      );
+                    }
+                  })}
 </div>
 
 </Container>

@@ -1,9 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from 'react-icons/bs';
 import { FaExchangeAlt, FaHeart, FaUser, FaShoppingCart } from 'react-icons/fa'; // Importing Font Awesome icons
+import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
+  const dispatch= useDispatch();
+  const cartState= useSelector(state=> state?.auth?.cartProducts)
+  const [total, setTotal]=useState(null)
+  useEffect(()=>{
+    let sum=0;
+    for (let index = 0; index < cartState?.length; index++) {
+      sum=sum+(Number(cartState[index].quantity) * Number(cartState[index].price))
+      setTotal(sum)
+    }
+
+  },[cartState])
   return (
     <>
       <header className="header-top-strip py-3">
@@ -31,7 +43,7 @@ const Header = () => {
           <div className="row align-items.center">
             <div className="col-2">
               <h2>
-                <Link className="text-white" to="/">Dev Corner</Link>
+                <Link className="text-white" to="/">Bye & Enjoy</Link>
               </h2>
             </div>
             <div className="col-5">
@@ -86,8 +98,8 @@ const Header = () => {
                 <FaShoppingCart className="text-white" size={30} /> {/* Increase size to 30 */}
                 <div style={{ marginLeft: '5px' }}> {/* Add margin */}
                   <div className="d-flex flex-column gap-10">
-                    <span className="badge bg-white text-dark">0</span>
-                    <p className="text-white mb-0">$200</p>
+                    <span className="badge bg-white text-dark">{cartState?.length ? cartState?.length : 0 }</span>
+                    <p className="text-white mb-0">$ {total ? total : 0}</p>
                   </div>
                 </div>
               </div>
