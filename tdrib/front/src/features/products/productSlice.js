@@ -4,9 +4,9 @@ import { productService } from "./productService";
 
 export const getAllProducts = createAsyncThunk(
     "product/get", 
-    async (thunkAPI) => {
+    async (data,thunkAPI) => {
         try {
-            return await productService.getProducts();
+            return await productService.getProducts(data);
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
@@ -34,7 +34,18 @@ export const addToWishlist = createAsyncThunk(
         }
     }
 );
-
+export const addRating = createAsyncThunk(
+    'product/rating',
+    async (data) => {
+      try {
+        const response = await productService.rateProduct(data); // Use the service function
+        return response;
+      } catch (error) {
+        console.error('Error adding rating:', error);
+        throw error;
+      }
+    }
+  );
 const productState = {
     product: "",
     isError: false,
@@ -95,7 +106,25 @@ export const productSlice = createSlice({
             })
             .addCase(getAProduct.rejected, (state, action) => {
                 state.isLoading = false;
-                state.isError = true;
+                 state.isError = true;
+                state.isSuccess = false;
+                state.message = action.error.message;
+                toast.error(state.message);
+            }).addCase(addRating.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(addRating.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isError = false;
+                state.isSuccess = true;
+                state.rating = action.payload;
+                state.message = "Rating Added successfully";
+                toast.success(state.message);
+                
+            })
+            .addCase(addRating.rejected, (state, action) => {
+                state.isLoading = false;
+                 state.isError = true;
                 state.isSuccess = false;
                 state.message = action.error.message;
                 toast.error(state.message);

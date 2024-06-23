@@ -1,9 +1,9 @@
 import axios from "axios";
 import { base_url, config } from "../../utils/axiosConfig";
 
-const getProducts=async()=>{
+const getProducts=async(data)=>{
     try {
-        const response = await axios.get(`${base_url}product`);
+        const response = await axios.get(`${base_url}product?${data?.brand?`brand=${data?.brand}&&`:""}${data?.tags?`tags=${data?.tags}&&`:""}${data?.category?`category=${data?.category}&&`:""}${data?.minPrice?`price[gte]=${data?.minPrice}&&`:""}${data?.maxPrice?`price[lte]=${data?.maxPrice}&&`:""}`);
         if(response.data){
             return response.data;
 
@@ -34,7 +34,19 @@ const addToWishlist = async (prodId) => {
         throw error;
     }
 };
+const rateProduct = async (data) => {
+    try {
+      const { star, comment, prodId ,firstname} = data; // Extract serializable parts
+      const response = await axios.put(`${base_url}product/rating`, { star, comment, prodId ,firstname}, config);
+      return response.data;
+    } catch (error) {
+      console.error("Error rating product: ", error);
+      throw error;
+    }
+  };
 export const productService={
     getProducts,
-    addToWishlist,getSingleProduct,
+    addToWishlist,
+    getSingleProduct,
+    rateProduct,
 };

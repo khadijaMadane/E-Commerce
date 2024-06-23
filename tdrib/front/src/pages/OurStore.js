@@ -19,11 +19,46 @@ const OurStore = () => {
   console.log(productState);
   const dispatch=useDispatch();
 
+const [brands,setBrands]=useState([]);
+const [categories, setCategories]=useState([])
+const [tags, setTags]=useState([]);
+const [colors, setColors]=useState([]);
+
+
+//Filter states
+const [brand,setBrand]=useState(null);
+const [color, setColor]=useState(null);
+const [category, setCategory]=useState(null)
+const [tag, setTag]=useState(null);
+const [minPrice,setMinPrice]=useState(null);
+const [maxPrice,setMaxPrice]=useState(null);
+const [sort,setSort]=useState(null);
+
+useEffect(()=>{
+  let newBrands=[];
+  let category=[];
+  let newtags=[];
+  let newColors=[];
+    for (let index = 0; index < productState.length; index++) {
+    const element = productState[index];
+    newBrands.push(element.brand) 
+    category.push(element.category)
+    newtags.push(element.tags)
+    newColors.push(element.color)
+  }
+  setBrands(newBrands)
+  setCategories(category)
+  setTags(newtags)
+},[productState])
+console.log("hello");
+console.log([...new Set(brands)],[...new Set(categories)],[...new Set(tags)]);
+
+
  useEffect(()=>{
   getProducts();
- }, [])
+ }, [sort,tag,brand,category,minPrice,maxPrice])
   const getProducts=()=>{
-    dispatch(getAllProducts());
+    dispatch(getAllProducts({sort,tag,brand,category,minPrice,maxPrice}));
   };
 
 
@@ -39,10 +74,11 @@ const OurStore = () => {
             <h3 className="filter-title">Shop By Categories</h3>
               <div>
                 <ul className="ps-0">
-                  <li>Watch</li>
-                  <li>Tv</li>
-                  <li>Camera</li>
-                  <li>Laptop</li>
+                  {
+                    categories && [...new Set(categories)].map((item, index)=>{
+                      return <li key={index} onClick={()=> setCategory(item)} >{item}</li>
+                    })
+                  }
                 </ul>
               </div>
             </div>
@@ -68,33 +104,27 @@ const OurStore = () => {
             <div className='d-flex align-items-center gap-10'>
                   <div className="form-floating mb-3">
                   <input
-                  type="email"
+                  type="number"
                   className="form-control"
                   id="floatingInput"
                   placeholder="From"
+                  onChange={(e)=>setMinPrice(e.target.value)}
                   />
                   <label htmlFor="floatingInput">From</label>
                   </div>
                   <div className="form-floating mb-3">
                   <input
-                  type="email"
+                  type="number"
                   className="form-control"
                   id="floatingInput1"
                   placeholder="To"
+                  onChange={(e)=>setMaxPrice(e.target.value)}
+
                   />
                   <label htmlFor="floatingInput1">To</label>
                   </div>
                   </div>
-            <h5 className='sub-title'>Color</h5>
-            <div>
-              
-
-
-              <Color/>
-
-
-              </div>
-              <h5 className="sub-title">Size</h5>
+            
                 <div>
                 <div className="form-check">
                 <input
@@ -125,18 +155,29 @@ const OurStore = () => {
           <h3 className="filter-title">Product Tags</h3>
             <div>
               <div className="product-tags d-flex flex-wrap align-items-center gap-10">
-                <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                Headphone
-                </span>
-                <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                Laptop
-                </span>
-                <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                Mobile
-                </span>
-                <span className="badge bg-light text-secondary rounded-3 py-2 px-3">
-                Wire
-                </span>
+              {
+                    tags && [...new Set(tags)].map((item, index)=>{
+                      return ( <span onClick={()=>setTag(item)} key={index} className="badge bg-light text-secondary rounded-3 py-2 px-3">
+                        {item}
+                        </span>)
+                    })
+                  }
+               
+              </div>
+            </div>
+            </div>
+            <div className="filter-card mb-3">
+          <h3 className="filter-title">Product Brands</h3>
+            <div>
+              <div className="product-tags d-flex flex-wrap align-items-center gap-10">
+              {
+                    brands && [...new Set(brands)].map((item, index)=>{
+                      return ( <span onClick={()=>setBrand(item)} key={index} className="badge bg-light text-secondary rounded-3 py-2 px-3">
+                        {item}
+                        </span>)
+                    })
+                  }
+               
               </div>
             </div>
             </div>
@@ -181,19 +222,22 @@ const OurStore = () => {
                   <div className='d-flex justify-content-between align-items-center'>
                   <div className="d-flex align-items-center gap-10">
                     <p className="mb-0 d-block" style={{"width":"100px"}}>Sort By:</p>
-                    <select name="" defaultValue={"DEFAULT"} className="form-control form-select" id="">
-                    <option disabled value="DEFAULT"></option>
-                    <option value="manual">Featured</option>
-                    <option value="best-selling" selected="selected"> Best selling
-                    </option>
-                    <option value="title-ascending">Alphabetically, A-Z</option>
-                    <option value="title-descending">
+                    <select 
+                    name=""
+                     defaultValue={"DEFAULT"} 
+                     className="form-control form-select" 
+                     id=""
+                     onChange={(e)=>setSort(e.target.value)}
+                     >
+                    
+                    <option value="title">Alphabetically, A-Z</option>
+                    <option value="-title">
                     Alphabetically, Z-A
                     </option>
-                    <option value="price-ascending">Price, low to high</option>
-                    <option value="price-descending">Price, high to low</option>
-                    <option value="created-ascending">Date, old to new</option>
-                    <option value="created-descending">Date, new to old</option>
+                    <option value="price">Price, low to high</option>
+                    <option value="-price">Price, high to low</option>
+                    <option value="createdAt">Date, old to new</option>
+                    <option value="-createdAt">Date, new to old</option>
                     </select>
                     </div>
                     <div className="d-flex align-items-center justify-space-between gap-10 container">

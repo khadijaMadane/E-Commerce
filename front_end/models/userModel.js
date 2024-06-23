@@ -75,5 +75,6 @@ userSchema.methods.createPasswordResetToken = async function () {
   return resettoken;
 };
 
+
 //Export the model
 module.exports = mongoose.model("User", userSchema);

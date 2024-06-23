@@ -144,7 +144,7 @@ const createProduct = asyncHandler(async (req, res) => {
     }
   });
   const rating = asyncHandler(async (req, res) => {
-    const { _id } = req.user;
+    const { _id,firstname } = req.user;
     const { star, prodId, comment } = req.body;
     try {
       const product = await Product.findById(prodId);
@@ -157,7 +157,7 @@ const createProduct = asyncHandler(async (req, res) => {
             ratings: { $elemMatch: alreadyRated },
           },
           {
-            $set: { "ratings.$.star": star, "ratings.$.comment": comment },
+            $set: { "ratings.$.star": star, "ratings.$.comment": comment, "ratings.$.firstname": firstname },
           },
           {
             new: true,
@@ -172,6 +172,7 @@ const createProduct = asyncHandler(async (req, res) => {
                 star: star,
                 comment: comment,
                 postedby: _id,
+                firstname: firstname ,
               },
             },
           },

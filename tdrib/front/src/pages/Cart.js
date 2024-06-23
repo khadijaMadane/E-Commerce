@@ -65,10 +65,10 @@ const Cart = () => {
                       />
                     </div>
                     <div className="w-75">
-                      <h5 className="title">{item?.productId.title}</h5>
-                      <p className="color">Color:
+                    <h5 className="title">{item?.productId?.title || 'No Title Available'}</h5>
+                    <p className="color">Color:
                         <ul className='colors ps-0'>
-                          <li style={{ backgroundColor: item?.color.title }}></li>
+                        <li style={{ backgroundColor: item?.color?.title || 'transparent' }}></li>
                         </ul>
                       </p>
                     </div>

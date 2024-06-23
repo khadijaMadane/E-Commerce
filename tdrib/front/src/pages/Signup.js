@@ -1,11 +1,12 @@
-import React from 'react';
-import { useDispatch } from 'react-redux'; // Importez useDispatch depuis Redux
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'; // Importez useDispatch depuis Redux
 import BreadCrumb from '../components/BreadCrumb';
 import Container from '../components/Container';
 import CustmInput from '../components/CustmInput';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { registerUser } from '../features/user/userSlice';
+import { authSlice, registerUser } from '../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const signUpSchema = yup.object({
   firstname: yup.string().required('First Name is Required').required("First name adress is required"),
@@ -16,6 +17,8 @@ const signUpSchema = yup.object({
 });
 
 const Signup = () => {
+  const navigate=useNavigate()
+  const authState=useSelector(state=>state.auth)
   const dispatch = useDispatch(); // Déclarez useDispatch ici
   const formik = useFormik({
     initialValues: {
@@ -31,6 +34,11 @@ const Signup = () => {
     },
   });
 
+  useEffect(()=>{
+    if(authState.createdUser!==null && authState.isError===false){
+      Navigate('/login')
+    }
+  },[authState])
   return (
     <>
       <BreadCrumb title="Login" />

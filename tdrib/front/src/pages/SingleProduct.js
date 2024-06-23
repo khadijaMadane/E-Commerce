@@ -9,9 +9,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineHeart } from 'react-icons/ai';
 import Container from '../components/Container';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAProduct } from '../features/products/productSlice';
+import { addRating, getAProduct } from '../features/products/productSlice';
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from '../features/user/userSlice';
+
+
 
 const SingleProduct = () => {
     const [color, setColor] = useState(null);
@@ -26,6 +28,39 @@ const SingleProduct = () => {
     const productState = useSelector(state => state.product.singleproduct);
     const cartState = useSelector(state => state.auth.cartProducts);
     const [modalVisible, setModalVisible] = useState(false);
+
+    const [star, setStar] = useState(null);
+    const [comment, setComment] = useState("");
+
+
+
+
+    
+
+    const addRatingToProduct = () => {
+        if (star === null) {
+            toast.error("Please add a star rating");
+            return false;
+        } else if (comment === "") {
+            toast.error("Please write a review about the product.");
+            return false;
+        } else {
+            dispatch(addRating({ star, comment, prodId: getProductId }))
+                .then(() => {
+                    toast.success("Rating added successfully");
+                    setComment("");
+                    setStar(null);
+                })
+                .catch((error) => {
+                    toast.error(`Error adding rating: ${error.message}`);
+                });
+
+                setTimeout(()=>{
+
+                },100)
+        }
+        return false;
+    };
 
     useEffect(() => {
         dispatch(getAProduct(getProductId));
@@ -45,7 +80,7 @@ const SingleProduct = () => {
 
     const uploadCart = () => {
         if (color === null) {
-            toast.error("Please Choose Color");
+            toast.error("Please choose a color");
             return false;
         } else {
             dispatch(addProdToCart({ productId: productState?._id, quantity, color, price: productState?.price }));
@@ -222,26 +257,55 @@ const SingleProduct = () => {
                             </div>
                             <div className='review-form py-4'>
                                 <h4 className="">Write a Review</h4>
-                                <form action="" className="d-flex flex-column gap-15">
-                                    <div>
-                                        <ReactStars count={5} size={24} value={4} edit={true} activeColor="#ffd700" />
-                                    </div>
-                                    <div>
-                                        <textarea className="w-100 form-control" cols="30" rows="4" placeholder="comments"></textarea>
-                                    </div>
-                                    <div className='d-flex justify-content-end'>
-                                        <button className="button border-0">Submit Review</button>
-                                    </div>
-                                </form>
+                                <div>
+                                    <ReactStars
+                                        count={5}
+                                        size={24}
+                                        value={4}
+                                        edit={true}
+                                        activeColor="#ffd700"
+                                        onChange={(e) => {
+                                            setStar(e)
+                                        }} />
+                                </div>
+                                <div>
+                                    <textarea
+                                        name=""
+                                        id=""
+                                        className="w-100 form-control"
+                                        cols="30"
+                                        rows="4"
+                                        placeholder="comments"
+                                        onChange={(e) => {
+                                            setComment(e.target.value)
+                                        }}
+                                        value={comment}
+                                    ></textarea>
+                                </div>
+                                <div className='d-flex justify-content-end'>
+                                    <button onClick={addRatingToProduct} className="button border-0" type='button'>Submit Review</button>
+                                </div>
                             </div>
                             <div className='reviews mt-4'>
-                                <div className='review'>
-                                    <div className='d-flex gap-10 align-items-center'>
-                                        <h6 className='mb-0'>Navdeep</h6>
-                                        <ReactStars count={5} size={24} value={4} edit={false} activeColor="#ffd700" />
-                                    </div>
-                                    <p className='mt-3'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum.</p>
-                                </div>
+                                {
+                                    productState && productState.ratings?.map((item, index) => {
+                                        return (
+                                            <div key={index} className='review'>
+                                                <div className='d-flex gap-10 align-items-center'>
+                                                <p className='mt-3'>{item?.firstname}</p>
+                                                    <ReactStars
+                                                        count={5}
+                                                        size={24}
+                                                        value={item?.star}
+                                                        edit={false}
+                                                        activeColor="#ffd700" />
+                                                </div>
+                                                <p className='mt-3'>{item?.comment}</p>
+                                            </div>
+                                        )
+                                    })
+                                }
+
                             </div>
                         </div>
                     </div>

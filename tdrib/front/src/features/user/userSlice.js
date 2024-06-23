@@ -136,7 +136,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error.message;
         if (state.isError === true) {
-          toast.error(action.error.message);
+          toast.error(action.payload.response.data.message);
         }
       })
       .addCase(loginUser.pending, (state) => {
@@ -158,7 +158,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error.message;
         if (state.isError === true) {
-          toast.error(action.error.message);
+          toast.error(action.payload.response.data.message);
         }
       })
       .addCase(getUserProductWishlist.pending, (state) => {

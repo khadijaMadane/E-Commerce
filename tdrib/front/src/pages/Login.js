@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // Assurez-vous d'importer Link si vous utilisez react-router-dom
 import BreadCrumb from '../components/BreadCrumb';
 import Container from '../components/Container'
@@ -31,6 +31,12 @@ const Login = () => {
        
     },
   });
+  useEffect(()=>{
+    if(authState.user !== null && authState.isError ===false){
+      navigate('/');
+    }
+  
+    },[authState])
 
   return (
     <>
