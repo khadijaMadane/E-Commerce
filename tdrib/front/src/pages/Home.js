@@ -10,6 +10,8 @@ import {services} from "../utils/Data"
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { getAllBlogs } from '../features/blogs/blogSlice';
+import {Typeahead} from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 const Home = () => {
 

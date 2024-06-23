@@ -18,6 +18,8 @@ const login=async(userData)=>{
       }  return response.data;
 
 }
+
+
 const getUserWishlist= async()=>{
     const response=await axios.get(`${base_url}user/wishlist`,config);
     if (response.data){
@@ -49,7 +51,39 @@ const updateProductFromCart = async (cartDetail) => {
         return response.data;
     }
 };
-
+const updateUser = async (data) => {
+    try {
+        const response = await axios.put(`${base_url}user/edit-user`, data, config); // Assurez-vous que `base_url` et `config` sont définis correctement
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+const forgetPassToken = async (data) => {
+    try {
+        const response = await axios.post(`${base_url}user/forgot-password-token`, data); // Assurez-vous que `base_url` et `config` sont définis correctement
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+const resetPass = async (data) => {
+    try {
+        const response = await axios.put(`${base_url}user/reset-password/${data.token}`, {password:data?.password}); // Assurez-vous que `base_url` et `config` sont définis correctement
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
 export const authService={
-    register,login,getUserWishlist,addToCart,getCart,removeProductFromCart,updateProductFromCart,
+    register,
+    login,
+    getUserWishlist,
+    addToCart,
+    getCart,
+    removeProductFromCart,
+    updateProductFromCart,
+    updateUser,
+    forgetPassToken,
+    resetPass,
 }

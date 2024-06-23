@@ -208,7 +208,7 @@ const deleteaUser = asyncHandler(async (req, res) => {
   });
   // Update a user
 
-const updatedUser = asyncHandler(async (req, res) => {
+  const updatedUser = asyncHandler(async (req, res) => {
     const { _id } = req.user;
     validateMongoDbId(_id);
   
@@ -216,21 +216,28 @@ const updatedUser = asyncHandler(async (req, res) => {
       const updatedUser = await User.findByIdAndUpdate(
         _id,
         {
-          firstname: req?.body?.firstname,
-          lastname: req?.body?.lastname,
-          email: req?.body?.email,
-          mobile: req?.body?.mobile,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
+          email: req.body.email,
+          mobile: req.body.mobile,
         },
         {
-          new: true,
+          new: true, // Pour retourner l'objet mis à jour
         }
       );
+  
+      if (!updatedUser) {
+        res.status(404);
+        throw new Error('User not found');
+      }
+  
       res.json(updatedUser);
     } catch (error) {
-      throw new Error(error);
+      res.status(500);
+      throw new Error(error.message);
     }
   });
-
+  
 const blockUser = asyncHandler(async (req, res) => {
     const { id } = req.params;
     validateMongoDbId(id);
@@ -294,7 +301,7 @@ const blockUser = asyncHandler(async (req, res) => {
     try {
       const token = await user.createPasswordResetToken();
       await user.save();
-      const resetURL = `Hi, Please follow this link to reset Your Password. This link is valid till 10 minutes from now. <a href='http://localhost:5000/api/user/reset-password/${token}'>Click Here</>`;
+      const resetURL = `Hi, Please follow this link to reset Your Password. This link is valid till 10 minutes from now. <a href='http://localhost:3000/reset-password/${token}'>Click Here</>`;
       const data = {
         to: email,
         text: "Hey User",
@@ -436,7 +443,24 @@ const updateProductQuantityFromCart = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
-  const emptyCart = asyncHandler(async (req, res) => {
+
+const createOrder = asyncHandler(async(req, res)=>{
+  const {shippingInfo,orderItems, totalPrice, totalPriceafterDiscount, paymentInfo } = req.body;
+  const { _id} =req.user;
+  try{
+      const order =await Order.create({
+        shippingInfo, orderItems,totalPrice, totalPriceafterDiscount, paymentInfo ,user: _id
+      })
+      res.json({
+        order,
+        success:true
+      })
+  } catch (error) {
+    throw new Error(error)
+  }
+})
+
+  /*const emptyCart = asyncHandler(async (req, res) => {
     const { _id } = req.user;
     validateMongoDbId(_id);
     try {
@@ -546,15 +570,17 @@ const updateProductQuantityFromCart = asyncHandler(async (req, res) => {
     } catch (error) {
       throw new Error(error);
     }
-  });
+  });   */
+
   
+  
+
 module.exports = {
     createUser,
     loginUserCtrl,
     getallUser,
     getaUser,
     deleteaUser,
-    updatedUser,
     blockUser,
     unblockUser,
     handleRefreshToken,
@@ -568,11 +594,8 @@ module.exports = {
     saveAddress,
     userCart,
     getUserCart,
-    emptyCart,
-    applyCoupon,
     createOrder,
-    getOrders,
-    updateOrderStatus,
     removeProductFromCart,
     updateProductQuantityFromCart,
+    updatedUser,
 };

@@ -7,6 +7,7 @@ const { createUser, loginUserCtrl, getallUser, getaUser,
      updateOrderStatus,
      removeProductFromCart,updateProductQuantityFromCart,} = require("../controller/userCtrl");
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
+const { paymentVerification, checkout } = require("../controller/paymentCtrl");
 const router = express.Router();
 
 router.post("/register", createUser);
@@ -20,27 +21,27 @@ router.post("/login", loginUserCtrl);
 router.post("/admin-login", loginAdmin);
 router.get("/logout", logout);
 
-router.put(
+/*router.put(
      "/order/update-order/:id",
      authMiddleware,
      isAdmin,
      updateOrderStatus
-   );
+   );*/
 
 router.get("/wishlist", authMiddleware, getWishlist);
 router.get("/all-users", getallUser);
 router.get("/refresh", handleRefreshToken);
-router.post("/cart/cash-order", authMiddleware, createOrder);
+router.post("/cart/create-order", authMiddleware, createOrder);
 
 router.post("/cart",  authMiddleware, userCart);
 
 router.get("/cart",  authMiddleware, getUserCart);
-router.delete("/empty-cart", authMiddleware, emptyCart);
+/*router.delete("/empty-cart", authMiddleware, emptyCart);*/
 router.delete("/delete-product-cart/:cartItemId", authMiddleware, removeProductFromCart);
 router.delete("/update-product-cart/:cartItemId/:newQuantity", authMiddleware, updateProductQuantityFromCart);
 
-router.post("/cart/applycoupon", authMiddleware, applyCoupon);
-router.get("/get-orders", authMiddleware, getOrders);
+/*router.post("/cart/applycoupon", authMiddleware, applyCoupon);
+router.get("/get-orders", authMiddleware, getOrders);*/
 
 router.get("/:id", authMiddleware, isAdmin, getaUser);
 router.delete("/:id", deleteaUser);
