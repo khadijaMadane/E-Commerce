@@ -17,7 +17,6 @@ const signUpSchema = yup.object({
 });
 
 const Signup = () => {
-  const navigate=useNavigate()
   const authState=useSelector(state=>state.auth)
   const dispatch = useDispatch(); // Déclarez useDispatch ici
   const formik = useFormik({
@@ -36,7 +35,7 @@ const Signup = () => {
 
   useEffect(()=>{
     if(authState.createdUser!==null && authState.isError===false){
-      Navigate('/login')
+     /* Navigate('/login')*/
     }
   },[authState])
   return (

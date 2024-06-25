@@ -12,6 +12,43 @@ const router = express.Router();
 
 router.post("/register", createUser);
 
+router.get('/verify-email/:token', async (req, res) => {
+  try {
+    const token = req.params.token;
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    const user = await User.findOne({
+      emailVerificationToken: hashedToken,
+      emailVerificationExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).send('Invalid or expired token');
+    }
+
+    user.isVerified = true;
+    user.emailVerificationToken = undefined;
+    user.emailVerificationExpires = undefined;
+    await user.save();
+
+    res.send('Email verified successfully. You can now log in.');
+  } catch (error) {
+    res.status(400).send('Invalid token');
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 router.post("/forgot-password-token", forgotPasswordToken);
 router.post("/forgot-password", forgotPasswordController);
 router.put("/reset-password/:token", resetPassword);

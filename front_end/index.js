@@ -21,12 +21,14 @@ const enqRouter = require("./routers/enqRoute");
 
 const morgan = require("morgan");
 dbConnect();
-// Ajustez le chemin pour servir les fichiers statiques
-app.use(express.static(path.join(__dirname, '..', 'tdrib', 'front', 'public')));
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// Servir les fichiers statiques du dossier 'public' de l'application React
+const publicPath = path.join(__dirname, '..', 'tdrib', 'front', 'public');
+app.use(express.static(publicPath));
 
 // Utilisation des routes API
 app.use("/api/user", authRouter);
@@ -46,9 +48,8 @@ app.post('/logout', (req, res) => {
 });
 
 // Rediriger toutes les autres requêtes vers index.html pour que React Router puisse gérer la navigation
-app.get('*', (req, res) => {
-    // Utilisez le chemin correct vers index.html
-    res.sendFile(path.join(__dirname, '..', 'tdrib', 'front', 'public', 'index.html'));
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
 });
 
 // Middleware pour gérer les erreurs 404 et autres erreurs API

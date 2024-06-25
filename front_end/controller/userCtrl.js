@@ -14,7 +14,35 @@ const crypto = require("crypto");
 const sendEmail = require("./emailCtrl");
 
 
+
 const createUser = asyncHandler(async (req, res) => {
+  const email = req.body.email;
+  const findUser = await User.findOne({ email });
+
+  if (!findUser) {
+    const newUser = new User(req.body);
+    const verificationToken = newUser.createEmailVerificationToken();
+    await newUser.save({ validateBeforeSave: false });
+
+    const verificationURL = `http://localhost:3000/verify-email/${verificationToken}`;
+    const message = `
+      <p>Please verify your email by clicking the link below:</p>
+      <a href="${verificationURL}">Click here to verify your email</a>
+    `;
+
+    await sendEmail({
+      to: newUser.email,
+      subject: "Email Verification",
+      html: message,
+    });
+
+    res.json({ message: "User created. Please check your email to verify your account." });
+  } else {
+    res.status(400);
+    throw new Error("User Already Exists");
+  }
+});
+/*const createUser = asyncHandler(async (req, res) => {
         const email = req.body.email;
         const findUser = await User.findOne({ email: email });
         if (!findUser) {
@@ -24,7 +52,7 @@ const createUser = asyncHandler(async (req, res) => {
         } else {
             throw new Error("User Already Exists");
         }
-});
+});*/
 // admin login
 
 const loginAdmin = asyncHandler(async (req, res) => {
@@ -62,6 +90,7 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
 const { email, password } = req.body;
 // check if user exists or not
     const findUser = await User.findOne({ email });
+
     if (findUser && (await findUser.isPasswordMatched(password))) {
         const refreshToken = await generateRefreshToken(findUser?._id);
         const updateuser = await User.findByIdAndUpdate(
@@ -71,6 +100,8 @@ const { email, password } = req.body;
     },
     { new: true }
     );
+
+  
     res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     maxAge: 72 * 60 * 60 * 1000,

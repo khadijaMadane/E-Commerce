@@ -24,6 +24,7 @@ import Checkout from "./pages/Checkout";
 import { PrivateRoutes } from "./routing/PrivateRoutes";
 import { OpenRoutes } from "./routing/OpenRoutes";
 import Profile from "./pages/Profile"; // Correct import statement
+import VerifyEmail from './pages/VerifyEmail';
 
 function App() {
   return (
@@ -54,9 +55,15 @@ function App() {
           <Route path="/reset-password/:token" element={<Resetpassword />} />
           <Route path="/shippingpo" element={<ShippingPo />} />
           <Route path="/termandcondition" element={<TermAndConditions />} />
+
+          <Route path="/verify-email/:token" element={<VerifyEmail />} />
+
         </Route>
       </Routes>
+      
     </BrowserRouter>
+   
+    
   );
 }
 
