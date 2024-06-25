@@ -279,23 +279,8 @@ color: var(--color-777777);
   object-fit: contain;
   width: 100%; /* Assure que l'image prend toute la largeur du conteneur */
   height: 100%; /* Assure que l'image prend toute la hauteur du conteneur */
-  transition: opacity 0.3s ease; /* Ajoute une transition pour l'opacité */
 }
 
-.product-card .product-image img:last-child {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0; /* Assure que l'image est initialement cachée */
-}
-
-.product-card:hover .product-image img:first-child {
-  opacity: 0; /* Fait disparaître l'image principale au survol */
-}
-
-.product-card:hover .product-image img:last-child {
-  opacity: 1; /* Fait apparaître l'image au survol */
-}
 
 /* Ajustez la position de la barre d'action au survol */
 .product-card:hover .action-bar {

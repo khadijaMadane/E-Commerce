@@ -33,7 +33,6 @@ const ProductCard = (props) => {
             <div className="product-card">
               <div className="product-image">
                 <img src={item?.images[0].url} className="img-fluid mx_auto" alt="product image" width={160} />
-                <img src="https://sh0pcart.netlify.app/images/watch.jpg" className="img-fluid mx_auto" alt="product image" width={160} />
               </div>
               <div className="product-details">
                 <h6 className="brand">{item?.brand}</h6>

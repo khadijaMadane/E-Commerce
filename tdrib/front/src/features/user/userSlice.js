@@ -2,21 +2,49 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "./userService";
 import { toast } from "react-toastify";
 
-export const registerUser = createAsyncThunk("auth/register", async (userData, thunkAPI) => {
-  try {
-    return await authService.register(userData);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
-  }
-});
+// Fonction utilitaire pour récupérer l'utilisateur depuis localStorage
+const getCustomerFromLocalStorage = () => {
+  const customer = localStorage.getItem("customer");
+  return customer ? JSON.parse(customer) : null;
+};
 
-export const loginUser = createAsyncThunk("auth/login", async (userData, thunkAPI) => {
-  try {
-    return await authService.login(userData);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+// Définition de initialState
+const initialState = {
+  user: getCustomerFromLocalStorage(),
+  cartProduct: [],
+  wishlist: [],
+  isError: false,
+  isSuccess: false,
+  isLoading: false,
+  message: "",
+};
+
+// Thunks pour les opérations asynchrones
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (userData, thunkAPI) => {
+    try {
+      return await authService.register(userData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
   }
-});
+);
+
+export const loginUser = createAsyncThunk(
+  "auth/login",
+  async (userData, thunkAPI) => {
+    try {
+      const response = await authService.login(userData);
+      if (response) {
+        localStorage.setItem("token", response.token);
+        return response;
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
 
 export const getUserProductWishlist = createAsyncThunk("user/wishlist", async (_, thunkAPI) => {
   try {
@@ -30,21 +58,29 @@ export const addProdToCart = createAsyncThunk("user/cart/add", async (cartData, 
   try {
     return await authService.addToCart(cartData);
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
-export const getUserCart = createAsyncThunk("user/cart/get", async (_, thunkAPI) => {
+
+export const createAnOrder = createAsyncThunk("user/cart/create-order", async (orderDetail, thunkAPI) => {
   try {
-    return await authService.getCart();
+    return await authService.createOrder(orderDetail);
   } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+export const getUserCart = createAsyncThunk("user/cart/get", async (data, thunkAPI) => {
+  try {
+    return await authService.getCart(data);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
   }
 });
 
-export const deleteCartProduct = createAsyncThunk("user/cart/delete", async (cartItemId, thunkAPI) => {
+export const deleteCartProduct = createAsyncThunk("user/cart/delete", async (data, thunkAPI) => {
   try {
-    return await authService.removeProductFromCart(cartItemId);
+    return await authService.removeProductFromCart(data);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }
@@ -86,12 +122,8 @@ export const logoutUser = createAsyncThunk(
   "user/logout",
   async (_, thunkAPI) => {
     try {
-      // Appel à votre service d'authentification ou nettoyage nécessaire
-      // Par exemple, vider le localStorage
       localStorage.removeItem("customer");
       localStorage.removeItem("token");
-      
-      // Retourner null ou une valeur appropriée selon votre besoin
       return null;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -99,18 +131,19 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-const getCustomerFromLocalStorage = () => {
-  const customer = localStorage.getItem("customer");
-  return customer ? JSON.parse(customer) : null;
-};
 
-const initialState = {
-  user: getCustomerFromLocalStorage(),
-  isError: false,
-  isSuccess: false,
-  isLoading: false,
-  message: "",
-};
+export const removeFromWishlist = createAsyncThunk(
+  "auth/removeFromWishlist",
+  async (id, thunkAPI) => {
+    try {
+      const response = await authService.deleteFromWishlist(id);
+      return response.data; // Réponse de votre API backend après suppression
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 
 export const authSlice = createSlice({
   name: "auth",
@@ -123,12 +156,10 @@ export const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.isError = false;
         state.isSuccess = true;
-        state.createdUser = action.payload;
-        if (state.isSuccess === true) {
-          toast.info("User created successfully");
-        }
+        state.user = action.payload;
+        localStorage.setItem("customer", JSON.stringify(action.payload));
+        toast.success("User logged in successfully");
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -269,10 +300,15 @@ export const authSlice = createSlice({
       }).addCase(logoutUser.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(logoutUser.fulfilled, (state, action) => {
+      .addCase(logoutUser.fulfilled, (state) => {
         state.isLoading = false;
-        state.user = action.payload; // Réinitialisez l'état de l'utilisateur ici
-        // Réinitialisez d'autres états si nécessaire
+        state.isSuccess = true;
+        state.user = null;
+        state.cartProducts = [];
+        state.wishlist = [];
+        localStorage.removeItem("customer");
+        localStorage.removeItem("token");
+        toast.success("Logged out successfully!");
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -317,7 +353,43 @@ export const authSlice = createSlice({
         if (state.isError === true) {
           toast.error("Something went wrong");
         }
-      });;
+      }).addCase(removeFromWishlist.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(removeFromWishlist.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        // Mettez à jour la wishlist en supprimant l'élément correspondant
+        state.wishlist = state.wishlist.filter(item => item._id !== action.payload._id);
+        toast.success("Product removed from wishlist successfully");
+      })
+      .addCase(removeFromWishlist.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error.message;
+        if (state.isError === true) {
+          toast.error(action.payload.response.data.message);
+        }
+      }).addCase(createAnOrder.pending, (state) => {
+        state.isLoading = true;
+      }).addCase(createAnOrder.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.orderdProduct = action.payload;
+        if (state.isSuccess) {
+          toast.success("Ordered  successfully!");
+        }
+      }).addCase(createAnOrder.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error.message;
+        if (state.isError === true) {
+          toast.error("Something went wrong");
+        }
+      });
   },
 });
 

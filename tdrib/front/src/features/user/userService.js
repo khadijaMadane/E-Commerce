@@ -10,6 +10,8 @@ const register=async(userData)=>{
         return response.data;
     }
 }
+
+  
 const login=async(userData)=>{
     const response= await axios.post(`${base_url}user/login`,userData);
     if (response.data) {
@@ -28,18 +30,17 @@ const getUserWishlist= async()=>{
 };
 const addToCart = async (cartData) => {
     const response=await axios.post(`${base_url}user/cart`,cartData,config);
-    if (response.data){
         return response.data;
-    }
+    
 }
-const getCart = async () => {
-    const response=await axios.get(`${base_url}user/cart`,config);
-    if (response.data){
+const getCart = async (data) => {
+    const response=await axios.get(`${base_url}user/cart`,data);
+    
         return response.data;
-    }
+    
 }
-const removeProductFromCart = async (cartItemId) => {
-    const response = await axios.delete(`${base_url}user/delete-product-cart/${cartItemId}`, config);
+const removeProductFromCart = async (data) => {
+    const response = await axios.delete(`${base_url}user/delete-product-cart/${data.id}`, data.config2);
     if (response.data) {
         return response.data;
     }
@@ -75,6 +76,24 @@ const resetPass = async (data) => {
         throw error;
     }
 };
+
+
+const createOrder = async (orderDetail) => {
+    try {
+        const response = await axios.post(`${base_url}user/cart/create-order`, orderDetail,config); // Assurez-vous que `base_url` et `config` sont définis correctement
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+const deleteFromWishlist = async (id) => {
+    try {
+        const response = await axios.delete(`${base_url}user/wishlist/${id}`, config);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
 export const authService={
     register,
     login,
@@ -86,4 +105,7 @@ export const authService={
     updateUser,
     forgetPassToken,
     resetPass,
+    deleteFromWishlist,
+    createOrder,
+    
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/blogCard";
@@ -12,9 +12,38 @@ import moment from "moment";
 import { getAllBlogs } from '../features/blogs/blogSlice';
 import {Typeahead} from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { getAllProducts } from '../features/products/productSlice';
 
 const Home = () => {
 
+
+
+  const productState = useSelector((state) => state?.product?.product) || [];
+  console.log('productState:', productState);
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState(null);
+
+  useEffect(() => {
+    if (Array.isArray(productState)) {
+
+      const newCategories = new Set();
+      
+      productState.forEach((product) => {
+        newCategories.add(product.category);
+        
+      });
+
+      setCategories([...newCategories]);
+      
+    }
+  }, [productState]);
+  useEffect(() => {
+    getProducts();
+  }, [category]);
+
+  const getProducts = () => {
+    dispatch(getAllProducts({category}));
+  };
   
   const blogState=useSelector((state)=>state?.blog?.blog);
   const dispatch=useDispatch();
@@ -171,6 +200,7 @@ alt="main banner"
         <div>
             <h6>Cameras</h6>
             <p>10 Items</p>
+            
         </div>
         <img className="fixed-size" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvV6D7XgWg4DGTOYfu7AaV_m1vi1qd6ligPw&s" alt="camera"/>
     </div>
@@ -215,24 +245,8 @@ alt="main banner"
             </div>
         </div>
     </Container>
-    <Container class1="featured-wrapper py-5 home-wrapper-2">
-    <div className="row">
-<div className="col-12">
-<h3 ssName="section-heading">Featured Collection</h3>
-</div>
-<ProductCard />
-<ProductCard />
-<ProductCard />
-<ProductCard />
-</div>
-    </Container>
-    <Container class1="special-wrapper py-5 home-wrapper-2">
-    <div className="row">
-      <div className="col-12">
-        <h3 className="section-heading">Special Products</h3>
-      </div>
-    </div>
-    </Container>
+   
+   
 
 <Container class1="marque-wrapper py-5">
         
@@ -271,20 +285,6 @@ alt="main banner"
         
       </Container>
       
-<Container class1="popular-wrapper py-5 home-wrapper-2">
-
-<div className="row">
-<div className="col-12">
-<h3 className="section-heading">Our Popular Products</h3>
-</div>
-</div>
-<div className="row">
-<ProductCard />
-<ProductCard />
-<ProductCard />
-<ProductCard />
-</div>
-</Container>
 
       
       <Container class1="blog-wrapper py-5 home-wrapper-2">

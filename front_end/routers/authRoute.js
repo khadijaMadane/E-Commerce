@@ -4,7 +4,7 @@ const { createUser, loginUserCtrl, getallUser, getaUser,
      logout, updatePassword, forgotPasswordController, resetPassword,
      forgotPasswordToken,loginAdmin, getWishlist, saveAddress, userCart,
      getUserCart, emptyCart, applyCoupon, createOrder, getOrders,
-     updateOrderStatus,
+     updateOrderStatus,removeFromWishlist,
      removeProductFromCart,updateProductQuantityFromCart,} = require("../controller/userCtrl");
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 const { paymentVerification, checkout } = require("../controller/paymentCtrl");
@@ -66,6 +66,8 @@ router.get("/logout", logout);
    );*/
 
 router.get("/wishlist", authMiddleware, getWishlist);
+router.delete('/wishlist/:id', authMiddleware,removeFromWishlist);
+
 router.get("/all-users", getallUser);
 router.get("/refresh", handleRefreshToken);
 router.post("/cart/create-order", authMiddleware, createOrder);

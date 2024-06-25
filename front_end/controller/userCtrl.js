@@ -407,12 +407,35 @@ const blockUser = asyncHandler(async (req, res) => {
   const getWishlist = asyncHandler(async (req, res) => {
     const { _id } = req.user;
     try {
-      const findUser = await User.findById(_id).populate("wishlist");
-      res.json(findUser);
+      const user = await User.findById(_id).populate("wishlist");
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+        return;
+      }
+      res.json(user.wishlist);
     } catch (error) {
       throw new Error(error);
     }
   });
+
+
+
+
+  const removeFromWishlist = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user.id);
+  
+    if (user) {
+      user.wishlist = user.wishlist.filter(
+        (item) => item.toString() !== req.params.id
+      );
+      await user.save();
+      res.status(200).json(user.wishlist); // Renvoie la wishlist mise à jour
+    } else {
+      res.status(404);
+      throw new Error('User not found');
+    }
+  });
+
   
   //cart 
   const userCart = asyncHandler(async (req, res) => {
@@ -420,30 +443,40 @@ const blockUser = asyncHandler(async (req, res) => {
     const { _id } = req.user;
     validateMongoDbId(_id);
     try {
-      
-      let newCart = await new Cart({
-        userId:_id,
-        productId,
-        color,
-        price,
-        quantity
-      }).save();
-      res.json(newCart);
-    } catch (error) {
-      throw new Error(error);
-    }
-  });
+      // Check if the product already exists in the user's cart
+      let existingCartItem = await Cart.findOne({ userId: _id, productId, color });
+
+      if (existingCartItem) {
+          // Update the existing cart item
+          existingCartItem.quantity += quantity;
+          existingCartItem.price = price; // Optional: update the price if it has changed
+          await existingCartItem.save();
+          res.json(existingCartItem);
+      } else {
+          // Create a new cart item
+          let newCart = await new Cart({
+              userId: _id,
+              productId,
+              color,
+              price,
+              quantity
+          }).save();
+          res.json(newCart);
+      }
+  } catch (error) {
+      res.status(500).json({ message: error.message });
+  }
+});
+
   
   const getUserCart = asyncHandler(async (req, res) => {
     const { _id } = req.user;
     validateMongoDbId(_id);
     try {
-      const cart = await Cart.find({ userId: _id }).populate(
-        "productId"
-      ).populate("color");
+      const cart = await Cart.find({ userId: _id }).populate("productId").populate("color");
       res.json(cart);
     } catch (error) {
-      throw new Error(error);
+      res.status(500).json({ message: error.message });
     }
   });
   const removeProductFromCart = asyncHandler(async (req, res) => {
@@ -453,8 +486,7 @@ const blockUser = asyncHandler(async (req, res) => {
     try {
         const deleteProductFromCart = await Cart.findOneAndDelete({ userId: _id, _id: cartItemId });
         if (!deleteProductFromCart) {
-            res.status(404);
-            throw new Error("Product not found in cart");
+          res.status(404).json({ message: "Product not found in cart" });
         }
         res.json({ message: "Product removed from cart" });
     } catch (error) {
@@ -629,4 +661,5 @@ module.exports = {
     removeProductFromCart,
     updateProductQuantityFromCart,
     updatedUser,
+    removeFromWishlist,
 };

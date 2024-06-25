@@ -13,7 +13,7 @@ const root = createRoot(document.getElementById('root'));
 // Render the App component wrapped with the Redux Provider
 root.render(
   <Provider store={store}>
-    <h1>index</h1>
+    
     <App />
   </Provider>
 );
